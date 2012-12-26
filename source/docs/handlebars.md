@@ -639,7 +639,7 @@ For example, imagine you are frequently wrapping certain values in a `<span>` ta
 ```javascript
 Handlebars.registerHelper('highlight', function(property, options) {
   var value = Ember.Handlebars.get(this, property, options);
-  return new Handlebars.SafeString('<span class="highlight">'+value+'</span>');
+  return new Handlebars.SafeString('<span class="highlight">'+Handlebars.Utils.escapeExpression(value)+'</span>');
 });
 ```
 
@@ -659,6 +659,8 @@ and it will output the following:
 ```
 
 NOTE: Parameters to helper functions are passed as names, not their current values. This allows you to optionally set up observers on the values. To get the current value of the parameter, use `Ember.get`, as shown above.
+
+NOTE: To avoid XSS attack escape the `value` using `Handlebars.Utils.escapeExpression` 
 
 ### Included Views
 
